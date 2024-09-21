@@ -162,7 +162,7 @@
         </div>
         <div
           v-if="isModalOpen"
-          class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+          class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
         >
           <div class="bg-white rounded-lg shadow-lg w-full mx-40 ZIndex">
             <div class="p-4 border-b">
@@ -274,7 +274,7 @@
           </div>
           <div
             v-if="isModalOpen2"
-            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50  z-50"
           >
             <div class="bg-white rounded-lg shadow-lg w-full mx-40 ZIndex">
               <div class="p-4 border-b">
