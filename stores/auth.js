@@ -1,0 +1,18 @@
+// stores/auth.js
+
+import { defineStore } from 'pinia'
+
+export const useAuthStore = defineStore('auth', {
+  state: () => ({
+    isAuthenticated: false,
+  }),
+  actions: {
+    login() {
+      this.isAuthenticated = true
+    },
+    logout() {
+      this.isAuthenticated = false
+    },
+  },
+  persist: true, // เพิ่มบรรทัดนี้ถ้าคุณใช้ pinia-plugin-persistedstate
+})
