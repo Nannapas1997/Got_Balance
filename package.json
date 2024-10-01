@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "nuxt": "^3.13.0",
+    "pinia": "^2.2.2",
+    "pinia-plugin-persistedstate": "^4.0.2",
     "vue": "latest",
     "vue-router": "latest"
   },

@@ -132,7 +132,7 @@
       </div>
     </div>
     <div class="flex flex-row">
-      <div class="w-44 flex flex-col basis-4/6 ml-10 mt-5">
+      <div class="w-44 flex flex-col flex-basis ml-10 mt-5">
         <label for="seller">
           รหัสผู้ขาย <span class="text-red-500">*</span> :
         </label>
@@ -247,105 +247,591 @@
       </div>
     </div>
     <div class="flex flex-row">
-      <div class="w-44 flex flex-col basis-3/6 ml-10">
-          <label for="field">
-            ฝ่าย <span class="text-red-500">*</span> :
-          </label>
-          <!-- Search Box and Button -->
-          <div class="flex items-center space-x-2">
-            <input
-              type="text"
-              v-model="selectedOption2.code"
-              readonly
-              class="px-3 py-2 border rounded w-40"
-              placeholder="เลือกตัวเลือก..."
-            />
-            <button
-              @click="openModal2"
-              class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 float-left"
-            >
-              ค้นหา
-            </button>
-            <div class="">
-              <span
-                >{{ selectedOption2.name }} </span>
-            </div>
-            <!-- Modal -->
-          </div>
-          <div
-            v-if="isModalOpen2"
-            class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50  z-50"
+      <div class="w-44 flex flex-col basis-96 ml-10">
+        <label for="field"> ฝ่าย <span class="text-red-500">*</span> : </label>
+        <!-- Search Box and Button -->
+        <div class="flex items-center space-x-2">
+          <input
+            type="text"
+            v-model="selectedOption2.code"
+            readonly
+            class="px-3 py-2 border rounded w-40"
+            placeholder="เลือกตัวเลือก..."
+          />
+          <button
+            @click="openModal2"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 float-left"
           >
-            <div class="bg-white rounded-lg shadow-lg w-full mx-40 ZIndex">
-              <div class="p-4 border-b">
-                <h2 class="text-xl font-semibold">ฝ่าย</h2>
-              </div>
+            ค้นหา
+          </button>
+          <div class="">
+            <span>{{ selectedOption2.name }} </span>
+          </div>
+          <!-- Modal -->
+        </div>
+        <div
+          v-if="isModalOpen2"
+          class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+        >
+          <div class="bg-white rounded-lg shadow-lg w-full mx-40 ZIndex">
+            <div class="p-4 border-b">
+              <h2 class="text-xl font-semibold">ฝ่าย</h2>
+            </div>
 
-              <div class="p-4">
-                <div class="mb-4">
-                  <input
-                    type="text"
-                    v-model="searchQuery2"
-                    placeholder="ค้นหารหัสหรือชื่อ..."
-                    class="w-full px-3 py-2 border rounded"
-                  />
-                  <div class="overflow-x-auto">
-                    <table class="min-w-full text-sm align-middle">
-                      <thead class="bg-gray-100">
-                        <tr>
-                          <th class="pl-2 py-2 text-left">เลือก</th>
-                          <th class="py-2 text-left">รหัส</th>
-                          <th class="py-2 text-left">ชื่อ</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr
-                          v-for="field in filteredFields"
-                          :key="field.code"
-                          class="border-b hover:bg-gray-50"
-                        >
-                          <td class="pl-4 py-2">
-                            <input
-                              type="radio"
-                              :id="field.code"
-                              name="code"
-                              :value="field.code"
-                              v-model="tempSelectedCode2"
-                            />
-                          </td>
-                          <td class="py-2">{{ field.code }}</td>
-                          <td class="py-2">{{ field.name }}</td>
-                          
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+            <div class="p-4">
+              <div class="mb-4">
+                <input
+                  type="text"
+                  v-model="searchQuery2"
+                  placeholder="ค้นหารหัสหรือชื่อ..."
+                  class="w-full px-3 py-2 border rounded"
+                />
+                <div class="overflow-x-auto">
+                  <table class="min-w-full text-sm align-middle">
+                    <thead class="bg-gray-100">
+                      <tr>
+                        <th class="pl-2 py-2 text-left">เลือก</th>
+                        <th class="py-2 text-left">รหัส</th>
+                        <th class="py-2 text-left">ชื่อ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="field in filteredFields"
+                        :key="field.code"
+                        class="border-b hover:bg-gray-50"
+                      >
+                        <td class="pl-4 py-2">
+                          <input
+                            type="radio"
+                            :id="field.code"
+                            name="code"
+                            :value="field.code"
+                            v-model="tempSelectedCode2"
+                          />
+                        </td>
+                        <td class="py-2">{{ field.code }}</td>
+                        <td class="py-2">{{ field.name }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <div class="p-4 border-t flex justify-end space-x-2">
-                  <button
-                    @click="closeModal2"
-                    class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
-                  >
-                    ยกเลิก
-                  </button>
-                  <button
-                    @click="confirmSelection2"
-                    :disabled="!tempSelectedCode2"
-                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
-                  >
-                    ยืนยัน
-                  </button>
-                </div>
+              </div>
+              <div class="p-4 border-t flex justify-end space-x-2">
+                <button
+                  @click="closeModal2"
+                  class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                >
+                  ยกเลิก
+                </button>
+                <button
+                  @click="confirmSelection2"
+                  :disabled="!tempSelectedCode2"
+                  class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+                >
+                  ยืนยัน
+                </button>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      <div class="w-44 flex flex-col basis-96 ml-10">
+        <label for="field"> แผนก <span class="text-red-500">*</span> : </label>
+        <!-- Search Box and Button -->
+        <div class="flex items-center space-x-2">
+          <input
+            type="text"
+            v-model="selectedOption3.code"
+            readonly
+            class="px-3 py-2 border rounded w-40"
+            placeholder="เลือกตัวเลือก..."
+          />
+          <button
+            @click="openModal3"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 float-left"
+          >
+            ค้นหา
+          </button>
+          <div class="">
+            <span>{{ selectedOption3.department_name }} </span>
+          </div>
+          <!-- Modal -->
+        </div>
+        <div
+          v-if="isModalOpen3"
+          class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+        >
+          <div class="bg-white rounded-lg shadow-lg w-full mx-40 ZIndex">
+            <div class="p-4 border-b">
+              <h2 class="text-xl font-semibold">แผนก</h2>
+            </div>
+
+            <div class="p-4">
+              <div class="mb-4">
+                <input
+                  type="text"
+                  v-model="searchQuery3"
+                  placeholder="ค้นหารหัสหรือชื่อ..."
+                  class="w-full px-3 py-2 border rounded"
+                />
+                <div class="overflow-x-auto">
+                  <table class="min-w-full text-sm align-middle">
+                    <thead class="bg-gray-100">
+                      <tr>
+                        <th class="pl-2 py-2 text-left">เลือก</th>
+                        <th class="py-2 text-left">รหัส</th>
+                        <th class="py-2 text-left">ชื่อฝ่าย</th>
+                        <th class="py-2 text-left">ชื่อแผนก</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="department in filteredDepartments"
+                        :key="department.code"
+                        class="border-b hover:bg-gray-50"
+                      >
+                        <td class="pl-4 py-2">
+                          <input
+                            type="radio"
+                            :id="department.code"
+                            name="code"
+                            :value="department.code"
+                            v-model="tempSelectedCode3"
+                          />
+                        </td>
+                        <td class="py-2">{{ department.code }}</td>
+                        <td class="py-2">{{ department.name }}</td>
+                        <td class="py-2">{{ department.department_name }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="p-4 border-t flex justify-end space-x-2">
+                <button
+                  @click="closeModal3"
+                  class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                >
+                  ยกเลิก
+                </button>
+                <button
+                  @click="confirmSelection3"
+                  :disabled="!tempSelectedCode3"
+                  class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+                >
+                  ยืนยัน
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-44 flex flex-col basis-96 ml-10">
+        <label for="field">
+          โครงการ <span class="text-red-500">*</span> :
+        </label>
+        <!-- Search Box and Button -->
+        <div class="flex items-center space-x-2">
+          <input
+            type="text"
+            v-model="selectedOption4.code"
+            readonly
+            class="px-3 py-2 border rounded w-40"
+            placeholder="เลือกตัวเลือก..."
+          />
+          <button
+            @click="openModal4"
+            class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 float-left"
+          >
+            ค้นหา
+          </button>
+          <div class="">
+            <span>{{ selectedOption4.project_name }} </span>
+          </div>
+          <!-- Modal -->
+        </div>
+        <div
+          v-if="isModalOpen4"
+          class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+        >
+          <div class="bg-white rounded-lg shadow-lg w-full mx-40">
+            <div class="p-4 border-b">
+              <h2 class="text-xl font-semibold">โครงการ</h2>
+            </div>
+
+            <div class="p-4">
+              <div class="mb-4">
+                <input
+                  type="text"
+                  v-model="searchQuery4"
+                  placeholder="ค้นหารหัสหรือชื่อ..."
+                  class="w-full px-3 py-2 border rounded"
+                />
+                <div class="overflow-x-auto">
+                  <table class="min-w-full text-sm align-middle">
+                    <thead class="bg-gray-100">
+                      <tr>
+                        <th class="pl-2 py-2 text-left">เลือก</th>
+                        <th class="py-2 text-left">รหัส</th>
+                        <th class="py-2 text-left">ชื่อ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="project in filteredProjects"
+                        :key="project.code"
+                        class="border-b hover:bg-gray-50"
+                      >
+                        <td class="pl-4 py-2">
+                          <input
+                            type="radio"
+                            :id="project.code"
+                            name="code"
+                            :value="project.code"
+                            v-model="tempSelectedCode4"
+                          />
+                        </td>
+                        <td class="py-2">{{ project.code }}</td>
+                        <td class="py-2">{{ project.project_name }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="p-4 border-t flex justify-end space-x-2">
+                <button
+                  @click="closeModal4"
+                  class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                >
+                  ยกเลิก
+                </button>
+                <button
+                  @click="confirmSelection4"
+                  :disabled="!tempSelectedCode4"
+                  class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+                >
+                  ยืนยัน
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="w-36 flex flex-col basis-56 mr-10">
+        <label for="vat">VAT <span class="text-red-500">*</span> :</label>
+        <select id="vat" class="select">
+          <option value="">----เลือก----</option>
+          <option value="Exclude">Exclude</option>
+          <option value="Include">Include</option>
+          <option value="NO VAT">NO VAT</option>
+        </select>
+      </div>
     </div>
+    <div class="overflow-x-scroll mx-10 my-10">
+      <div class="flex">
+        <button
+          class="basis-34 mr-10"
+          @click="addProduct"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px;
+            border: none;
+            background: #5cb85c;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+          "
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
+          </svg>
+          เพิ่มสินค้า
+        </button>
+        <button
+          class="basis-34"
+          style="
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px;
+            border: none;
+            background: #337ab7;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 1rem;
+          "
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path fill="currentColor" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
+          </svg>
+          เพิ่มคำอธิบาย
+        </button>
+      </div>
+      <table class="min-w-full text-sm align-middle">
+        <thead class="bg-green-300">
+          <tr>
+            <th class="pl-2 py-2 text-left">ลำดับที่</th>
+            <th class="py-2 px-10 text-left">คลัง</th>
+            <th class="py-2 text-left">
+              รหัสสินค้า<span class="text-red-500">*</span>
+            </th>
+            <th class="py-2 text-left">ชื่อสินค้า</th>
+            <th class="py-2 text-left">
+              วันนัด<span class="text-red-500">*</span>
+            </th>
+            <th class="py-2 text-left">ฝ่าย</th>
+            <th class="py-2 text-left">แผนก</th>
+            <th class="py-2 text-left">โครงการ</th>
+            <th class="py-2 text-left">
+              จำนวนหน่วยนับใหญ่<span class="text-red-500">*</span>
+            </th>
+            <th class="py-2 text-left">
+              จำนวนเศษ<span class="text-red-500">*</span>
+            </th>
+            <th class="py-2 text-left">เงื่อนไขการคำนวณจำนวนเงิน</th>
+            <th class="py-2 text-left">ราคาต่อหน่วย</th>
+            <th class="py-2 text-left">จำนวนเงิน</th>
+            <th class="py-2 text-left">ส่วนลด</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(product, index) in products" :key="index">
+            <td class="pl-2 padding-y">{{ index + 1 }}</td>
+            <td class="padding-y">
+              <select id="warehouse" class="select">
+                <option value="">----เลือกคลัง----</option>
+                <option value="คลัง 1">คลัง 1</option>
+                <option value="คลัง 2">คลัง 2</option>
+                <option value="คลัง 3">คลัง 3</option>
+                <option value="คลัง 4">คลัง 4</option>
+              </select>
+            </td>
+            <td class="">
+              <div class="search-container">
+                <input type="text" class="search-input" placeholder="รหัสสินค้า"
+                v-model="selectedOption5.code"
+                  required
+                 />
+                <button class="search-button" @click="openModal5">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M11 17a6 6 0 100-12 6 6 0 000 12zm0 0l6 6"
+                    />
+                  </svg>
+                </button>
+              </div>
+              <div
+          v-if="isModalOpen5"
+          class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+        >
+          <div class="bg-white rounded-lg shadow-lg w-full mx-40 ZIndex">
+            <div class="p-4 border-b">
+              <h2 class="text-xl font-semibold">สินค้า</h2>
+            </div>
+
+            <div class="p-4">
+              <div class="mb-4">
+                <input
+                  type="text"
+                  v-model="searchQuery5"
+                  placeholder="ค้นหารหัสหรือชื่อ..."
+                  class="w-full px-3 py-2 border rounded"
+                />
+                <div class="overflow-x-auto">
+                  <table class="min-w-full text-sm align-middle">
+                    <thead class="bg-gray-100">
+                      <tr>
+                        <th class="pl-2 py-2 text-left">เลือก</th>
+                        <th class="py-2 text-left">รหัส</th>
+                        <th class="py-2 text-left">ชื่อ</th>
+                        <th class="py-2 text-left">หน่วยนับใหญ่</th>
+                        <th class="py-2 text-left">หน่วยนับเศษ</th>
+                        <th class="py-2 text-left">ขนาดบรรจุ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="field in filteredProducts"
+                        :key="field.code"
+                        class="border-b hover:bg-gray-50"
+                      >
+                        <td class="pl-4 py-2">
+                          <input
+                            type="radio"
+                            :id="field.code"
+                            name="code"
+                            :value="field.code"
+                            v-model="tempSelectedCode5"
+                          />
+                        </td>
+                        <td class="py-2">{{ field.code }}</td>
+                        <td class="py-2">{{ field.product_name }}</td>
+                        <td class="py-2">{{ field.big_unit }}</td>
+                        <td class="py-2">{{ field.small_unit }}</td>
+                        <td class="py-2">{{ field.amount }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="p-4 border-t flex justify-end space-x-2">
+                <button
+                  @click="closeModal5"
+                  class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
+                >
+                  ยกเลิก
+                </button>
+                <button
+                  @click="confirmSelection5"
+                  :disabled="!tempSelectedCode5"
+                  class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+                >
+                  ยืนยัน
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+            </td>
+            <td class="padding-y">
+              <input
+                type="text"
+                v-model="product.productName"
+                class="input w-96"
+                placeholder="ชื่อสินค้า"
+              />
+            </td>
+            <td class="padding-y">
+              <input
+                type="date"
+                v-model="product.appointmentDate"
+                class="input"
+                required
+              />
+            </td>
+            <td class="padding-y">
+              <input
+                type="text"
+                v-model="product.department"
+                class="input"
+                placeholder="ฝ่าย"
+              />
+            </td>
+            <td class="padding-y">
+              <input
+                type="text"
+                v-model="product.section"
+                class="input"
+                placeholder="แผนก"
+              />
+            </td>
+            <td class="padding-y">
+              <input
+                type="text"
+                v-model="product.project"
+                class="input"
+                placeholder="โครงการ"
+              />
+            </td>
+            <td class="padding-y">
+              <input
+                type="number"
+                v-model="product.unitCount"
+                class="input"
+                placeholder="จำนวนหน่วยนับใหญ่"
+                required
+              />
+            </td>
+            <td class="padding-y">
+              <input
+                type="number"
+                v-model="product.subUnitCount"
+                class="input"
+                placeholder="จำนวนเศษ"
+                required
+              />
+            </td>
+            <td class="padding-y">
+              <input
+                type="text"
+                v-model="product.calculationCondition"
+                class="input"
+                placeholder="เงื่อนไขการคำนวณ"
+              />
+            </td>
+            <td class="padding-y">
+              <input
+                type="number"
+                v-model="product.unitPrice"
+                class="input"
+                placeholder="ราคาต่อหน่วย"
+              />
+            </td>
+            <td class="padding-y">
+              <input
+                type="number"
+                v-model="product.totalPrice"
+                class="input"
+                placeholder="จำนวนเงิน"
+              />
+            </td>
+            <td class="padding-y">
+              <input
+                type="number"
+                v-model="product.discount"
+                class="input"
+                placeholder="ส่วนลด"
+              />
+            </td>
+            <td class="text-center">
+              <button @click="removeProduct(index)" class="delete-button">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M3 6l3 18h12l3-18H3zm16 16H5l-2-14h18l-2 14zM14 2h-4v2H3v2h18V4h-7V2z"
+                  />
+                </svg>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <!-- (Rest of the form and other sections are unchanged) -->
   </div>
 </template>
+
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRouter, useCookie } from "#imports"; // ใช้การนำเข้าจาก #imports
+import { ref, onMounted, computed } from "vue";
+import { useRouter, useCookie } from "#app";
 // ช่องเลือกคลัง
 const selectedWarehouse = ref("");
 
@@ -419,6 +905,9 @@ const handleLogout = () => {
 // ตัวแปรสำหรับควบคุมการเปิดปิดโมดอล
 const isModalOpen = ref(false);
 const isModalOpen2 = ref(false);
+const isModalOpen3 = ref(false);
+const isModalOpen4 = ref(false);
+const isModalOpen5 = ref(false);
 // ตัวแปรสำหรับเก็บค่าที่เลือกใน Search Box
 const selectedOption = ref({
   code: "",
@@ -428,12 +917,27 @@ const selectedOption = ref({
   email: "",
 });
 const selectedOption2 = ref({
-  code:"",
+  code: "",
   name: "",
+});
+const selectedOption3 = ref({
+  code: "",
+  department_name: "",
+});
+const selectedOption4 = ref({
+  code: "",
+  project_name: "",
+});
+const selectedOption5 = ref({
+  code: "",
+  product_name: "",
 })
 // ตัวแปรสำหรับเก็บค่าที่เลือกในโมดอลชั่วคราว
 const tempSelectedCode = ref("");
 const tempSelectedCode2 = ref("");
+const tempSelectedCode3 = ref("");
+const tempSelectedCode4 = ref("");
+const tempSelectedCode5 = ref("");
 // รายการผู้ขายconst tempSelectedCode = ref("");
 const vendors = ref([
   {
@@ -497,64 +1001,178 @@ const vendors = ref([
 const fields = ref([
   {
     code: "D001",
-    name: "ฝ่ายขาย"
+    name: "ฝ่ายขาย",
   },
   {
     code: "D002",
-    name: "ฝ่ายบุคคล"
+    name: "ฝ่ายบุคคล",
   },
   {
     code: "D003",
-    name: "ฝ่ายการตลาด"
+    name: "ฝ่ายการตลาด",
   },
   {
     code: "D004",
-    name: "ฝ่ายผลิต"
+    name: "ฝ่ายผลิต",
   },
   {
     code: "D005",
-    name: "ฝ่ายการเงิน"
+    name: "ฝ่ายการเงิน",
   },
   {
     code: "D006",
-    name: "ฝ่ายบัญชี"
+    name: "ฝ่ายบัญชี",
   },
   {
     code: "D007",
-    name: "ฝ่ายคลังสินค้า"
+    name: "ฝ่ายคลังสินค้า",
   },
-])
-// const department = ref([
-//   {
-//     code: "D001",
-//     name: "ฝ่ายขาย"
-//   },
-//   {
-//     code: "D002",
-//     name: "ฝ่ายบุคคล"
-//   },
-//   {
-//     code: "D003",
-//     name: "ฝ่ายการตลาด"
-//   },
-//   {
-//     code: "D004",
-//     name: "ฝ่ายผลิต"
-//   },
-//   {
-//     code: "D005",
-//     name: "ฝ่ายการเงิน"
-//   },
-//   {
-//     code: "D006",
-//     name: "ฝ่ายบัญชี"
-//   },
-//   {
-//     code: "D007",
-//     name: "ฝ่ายคลังสินค้า"
-//   },
-// ])
+]);
+const departments = ref([
+  {
+    code: "S001",
+    name: "ฝ่ายขาย",
+    department_name: "แผนก 001",
+  },
+  {
+    code: "S002",
+    name: "ฝ่ายขาย",
+    department_name: "แผนก 002",
+  },
+  {
+    code: "S003",
+    name: "ฝ่ายขาย",
+    department_name: "แผนก 003",
+  },
+  {
+    code: "S004",
+    name: "ฝ่ายบุคคล",
+    department_name: "แผนก 004",
+  },
+  {
+    code: "S005",
+    name: "ฝ่ายบุคคล",
+    department_name: "แผนก 005",
+  },
+  {
+    code: "S006",
+    name: "ฝ่ายคลังสินค้า",
+    department_name: "แผนก 006",
+  },
+]);
+const projects = ref([
+  {
+    code: "P001",
+    project_name: "Project 001",
+  },
+  {
+    code: "P002",
+    project_name: "Project 002",
+  },
+  {
+    code: "P003",
+    project_name: "Project 003",
+  },
+  {
+    code: "P004",
+    project_name: "Project 004",
+  },
+  {
+    code: "P005",
+    project_name: "Project 005",
+  },
+  {
+    code: "P006",
+    project_name: "Project 006",
+  },
+  {
+    code: "P007",
+    project_name: "Project 007",
+  },
+]);
+const product_codes = ref([
+  {
+    code: "I001",
+    product_name: "ดินสอ 001",
+    big_unit: "โหล",
+    small_unit: "แท่ง",
+    amount: "12",
+  },
+  {
+    code: "I002",
+    product_name: "สบู่ 002",
+    big_unit: "กล่อง",
+    small_unit: "ก้อน",
+    amount: "100",
+  },
+  {
+    code: "I003",
+    product_name: "ยางรถยนต์ 003",
+    big_unit: "",
+    small_unit: "เส้น",
+    amount: "1",
+  },
+  {
+    code: "I004",
+    product_name: "หัวเทียน 004",
+    big_unit: "",
+    small_unit: "ดอก",
+    amount: "1",
+  },
+  {
+    code: "I005",
+    product_name: "หลอดไฟ 005",
+    big_unit: "กล่อง",
+    small_unit: "หลอด",
+    amount: "10",
+  },
+  {
+    code: "I006",
+    product_name: "หลอดLED 006",
+    big_unit: "กล่อง",
+    small_unit: "หลอด",
+    amount: "10",
+  },
+  {
+    code: "I007",
+    product_name: "ถ่านไฟฉาย 007",
+    big_unit: "",
+    small_unit: "อัน",
+    amount: "1",
+  },
+  {
+    code: "I008",
+    product_name: "iPhone 008",
+    big_unit: "",
+    small_unit: "เครื่อง",
+    amount: "1",
+  },
+  {
+    code: "I009",
+    product_name: "หนังสือ 009",
+    big_unit: "",
+    small_unit: "เล่ม",
+    amount: "1",
+  },
+  {
+    code: "I010",
+    product_name: "ค่าทำความสะอาด 010",
+    big_unit: "",
+    small_unit: "งาน",
+    amount: "1",
+  },
+]);
 // ฟังก์ชันเปิดโมดอล
+const openModal5 = () => {
+  isModalOpen5.value = true;
+  // ตั้งค่า tempSelectedCode เป็นค่าปัจจุบัน
+  tempSelectedCode5.value = selectedOption5.value.code;
+};
+const openModal4 = () => {
+  isModalOpen4.value = true;
+  // ตั้งค่า tempSelectedCode เป็นค่าปัจจุบัน
+  tempSelectedCode4.value = selectedOption4.value.code;
+};
 const openModal3 = () => {
   isModalOpen3.value = true;
   // ตั้งค่า tempSelectedCode เป็นค่าปัจจุบัน
@@ -579,7 +1197,13 @@ const closeModal2 = () => {
   isModalOpen2.value = false;
 };
 const closeModal3 = () => {
-  isModalOpen2.value = false;
+  isModalOpen3.value = false;
+};
+const closeModal4 = () => {
+  isModalOpen4.value = false;
+};
+const closeModal5 = () => {
+  isModalOpen5.value = false;
 };
 // ฟังก์ชันยืนยันการเลือก
 const confirmSelection = () => {
@@ -613,15 +1237,41 @@ const confirmSelection2 = () => {
 };
 const confirmSelection3 = () => {
   // ค้นหาผู้ขายที่ถูกเลือกจาก code
-  const selectedDepartments = fields.value.find(
-    (field) => field.code === tempSelectedCode2.value
+  const selectedDepartments = departments.value.find(
+    (department) => department.code === tempSelectedCode3.value
   );
-  if (selectedFields) {
-    selectedOption2.value = {
-      code: selectedFields.code,
-      name: selectedFields.name,
+  if (selectedDepartments) {
+    selectedOption3.value = {
+      code: selectedDepartments.code,
+      department_name: selectedDepartments.department_name,
     };
-    isModalOpen2.value = false;
+    isModalOpen3.value = false;
+  }
+};
+const confirmSelection4 = () => {
+  // ค้นหาผู้ขายที่ถูกเลือกจาก code
+  const selectedProjects = projects.value.find(
+    (project) => project.code === tempSelectedCode4.value
+  );
+  if (selectedProjects) {
+    selectedOption4.value = {
+      code: selectedProjects.code,
+      project_name: selectedProjects.project_name,
+    };
+    isModalOpen4.value = false;
+  }
+};
+const confirmSelection5 = () => {
+  // ค้นหาผู้ขายที่ถูกเลือกจาก code
+  const selectedProducts = product_codes.value.find(
+    (product_code) => product_code.code === tempSelectedCode5.value,
+  );
+  if (selectedProducts) {
+    selectedOption5.value = {
+      code: selectedProducts.code,
+      product_name: selectedOption5.product_name,
+    };
+    isModalOpen5.value = false;
   }
 };
 const searchQuery = ref("");
@@ -650,7 +1300,71 @@ const filteredFields = computed(() => {
     );
   });
 });
+const searchQuery3 = ref("");
+const filteredDepartments = computed(() => {
+  if (!searchQuery3.value) {
+    return departments.value;
+  }
+  const searchLower3 = searchQuery3.value.toLowerCase();
+  return departments.value.filter((department) => {
+    return (
+      department.code.toLowerCase().includes(searchLower3) ||
+      department.department_name.toLowerCase().includes(searchLower3)
+    );
+  });
+});
+const searchQuery4 = ref("");
+const filteredProjects = computed(() => {
+  if (!searchQuery4.value) {
+    return projects.value;
+  }
+  const searchLower4 = searchQuery4.value.toLowerCase();
+  return projects.value.filter((project) => {
+    return (
+      project.code.toLowerCase().includes(searchLower4) ||
+      project.project_name.toLowerCase().includes(searchLower4)
+    );
+  });
+});
+const searchQuery5 = ref("");
+const filteredProducts= computed(() => {
+  if (!searchQuery5.value) {
+    return product_codes.value;
+  }
+  const searchLower5 = searchQuery5.value.toLowerCase();
+  return product_codes.value.filter((product_code) => {
+    return (
+      product_code.code.toLowerCase().includes(searchLower5) ||
+      product_code.product_name.toLowerCase().includes(searchLower5)
+    );
+  });
+});
+// Array to store product rows
+const products = ref([]);
+
+// Function to add a new product row
+const addProduct = () => {
+  products.value.push({
+    warehouse: "",
+    productCode: "",
+    productName: "",
+    appointmentDate: "",
+    department: "",
+    section: "",
+    project: "",
+    unitCount: "",
+    subUnitCount: "",
+    calculationCondition: "",
+    unitPrice: "",
+    totalPrice: "",
+    discount: "",
+  });
+};
+const removeProduct = (index) => {
+  products.value.splice(index, 1);
+};
 </script>
+
 <style scoped>
 .navbar {
   background-color: #1aff8c;
@@ -670,6 +1384,9 @@ label {
   margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 3px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 15px;
 }
 .select {
   width: 100%;
@@ -700,6 +1417,42 @@ label {
   flex-basis: 183px;
 }
 .z-index-2 {
-  z-index:1;
+  z-index: 1;
+}
+.flex-basis {
+  flex-basis: 60.6666667%;
+}
+.search-container {
+  display: flex;
+  align-items: center;
+  border: 1px solid #d1d5db; /* Tailwind's gray-300 color */
+  border-radius: 0.375rem; /* Tailwind's rounded-md */
+  background-color: white; /* Tailwind's gray-100 */
+  overflow: hidden;
+  width: 238px; /* Fixed width for a similar appearance */
+}
+.search-input {
+  border: none;
+  outline: none;
+  padding: 0.5rem 0.75rem;
+  flex-grow: 1;
+  background-color: transparent;
+}
+.search-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+.search-button svg {
+  width: 1.25rem; /* Similar size to match the icon in the image */
+  height: 1.25rem;
+  color: #4b5563; /* Tailwind's gray-600 color */
+}
+.padding-y {
+  padding-top: 11px;
 }
 </style>
